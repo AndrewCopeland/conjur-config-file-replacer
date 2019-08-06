@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<configuration>
+    <connectionStrings>   
+        <add name="MyConnectionString" 
+		connectionString="Data Source=localhost;Initial Catalog=ABC;UserId={{ CONF_DB_USERNAME }};Password={{ CONF_DB_PASSWORD }}"
+             providerName="System.Data.SqlClient"/>
+    </connectionStrings>
+</configuration>
