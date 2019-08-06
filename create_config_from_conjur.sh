@@ -37,6 +37,17 @@ function create_tmp_file() {
   echo "Copying $template_file_path => $tmp_file"
 }
 
+function execute_summon_to_replace_env_vars() {
+  res=$(summon -p ./summon-aws.rb bash ./replace_from_env_vars.sh "$tmp_file")
+  if [ $? -ne 0 ]; then
+    echo "Failed to execute summon: summon -p ./summon-aws.rb bash ./replace_from_env_vars.sh \"$tmp_file\""
+    echo "Summon response: $res"
+    exit 4
+  else
+    echo "$res"
+  fi
+}
+
 function create_conf_file_and_remove_tmp_file() {
   echo "Copying $tmp_file => $conf_file_path"
   cp $tmp_file $conf_file_path
@@ -51,9 +62,9 @@ function main() {
   validate_conf_path
 
   create_tmp_file
-
+  
   # replace variables within the tmp file
-  summon -p ./summon-aws.rb bash ./replace_from_env_vars.sh "$tmp_file"
+  execute_summon_to_replace_env_vars
 
   create_conf_file_and_remove_tmp_file
 }
